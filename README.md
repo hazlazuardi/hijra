@@ -1,104 +1,81 @@
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
-</a>
+# Welcome to Hijra!
 
-<p align="center">
- The fastest way to build apps with Next.js and Supabase
-</p>
+## What's Hijra All About?
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
-<br/>
+Hey there! 👋 Meet **Hijra**, your new go-to minimalist web app designed to help you become a better Muslim. Whether you're at home, on the go, or anywhere in between, Hijra is here to make worship easy and accessible, eliminating any excuses. 
 
-## Features
+### Why You'll Love It
 
-- Works across the entire [Next.js](https://nextjs.org) stack
-  - App Router
-  - Pages Router
-  - Middleware
-  - Client
-  - Server
-  - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Components with [shadcn/ui](https://ui.shadcn.com/)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
+- **Simple and Clean**: We keep things clutter-free, focusing only on what truly matters.
+- **Motivating, Not Judging**: Our streak-based tracking is all about encouragement, not guilt.
+- **Smooth Sailing**: Enjoy a seamless experience that works offline-first and syncs your progress effortlessly.
+- **Perfect for Mobile**: Designed with on-the-go users in mind, but looks great on any device.
 
-## Demo
+## Cool Features
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
+### Prayer Tracker
 
-## Deploy to Vercel
+- Keep tabs on your mandatory (Fard) and Sunnah prayers.
+- Get motivated with streaks, just like those GitHub charts!
+- See your prayer status at a glance:
+  - **On-Time** (green)
+  - **Late** (yellow)
+  - **Missed (Qadha)** (red)
+- Our UI is all about positive vibes and gentle reminders.
 
-Vercel deployment will guide you through creating a Supabase account and project.
+### Fasting Tracker
 
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
+- Track your 30-day Ramadan fasting journey with visual streaks.
+- Easily spot any missed fasting days.
+- Use the menstruation toggle to keep your streaks intact and track missed days.
+- Make-up fasting (Qadha) options are ready for you after Ramadan.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This+starter+configures+Supabase+Auth+to+use+cookies%2C+making+the+user%27s+session+available+throughout+the+entire+Next.js+app+-+Client+Components%2C+Server+Components%2C+Route+Handlers%2C+Server+Actions+and+Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png)
+### 5-Minute Worship Suggestions
 
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
+- Short on time? No problem! Get quick, meaningful worship ideas.
+- Each session gives you a fresh suggestion, like:
+  - Dive into a powerful Quran verse.
+  - Take on a quick Dhikr challenge.
+  - Reflect on a short, impactful Hadith.
+- Want more? Just refresh for a new suggestion.
 
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
+### Prayer Times & Qibla Finder
 
-## Clone and run locally
+- Automatically fetches prayer times based on where you are.
+- Shows only the next prayer time for a distraction-free experience.
+- Find the Qibla easily with our arrow-based UI.
 
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
+### Kultum (Coming Soon)
 
-2. Create a Next.js app using the Supabase Starter template npx command
+- Enjoy 3-minute reads packed with:
+  - Inspiring stories of prophets, scholars, and companions.
+  - Practical Islamic wisdom for everyday life.
+- Perfect for a quick spiritual boost.
 
-   ```bash
-   npx create-next-app --example with-supabase with-supabase-app
-   ```
+## The Tech Behind the Magic
 
-   ```bash
-   yarn create next-app --example with-supabase with-supabase-app
-   ```
+### Frontend & Offline Support
 
-   ```bash
-   pnpm create next-app --example with-supabase with-supabase-app
-   ```
+- Built with Next.js 15 PWA for a fast, offline-ready experience.
+- Uses IndexedDB for local storage, ensuring your data is always at your fingertips.
 
-3. Use `cd` to change into the app's directory
+### Backend & Database
 
-   ```bash
-   cd with-supabase-app
-   ```
+- Supabase handles authentication and cloud sync.
+- Powered by a PostgreSQL database via Supabase.
+- Optional edge functions for real-time updates.
 
-4. Rename `.env.example` to `.env.local` and update the following:
+### Hosting & Deployment
 
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=[INSERT SUPABASE PROJECT API ANON KEY]
-   ```
+- Hosted on Vercel for quick, scalable, and instant deployments.
 
-   Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` can be found in [your Supabase project's API settings](https://app.supabase.com/project/_/settings/api)
+## Non-Functional Goodies
 
-5. You can now run the Next.js local development server:
+- **Accessibility**: WCAG 2.1-compliant, with dark mode and screen reader support.
+- **Offline Mode**: Fully functional offline-first with IndexedDB.
+- **Mobile-First**: Optimized for mobile, but looks great everywhere.
+- **No Distractions**: Minimal UI, no annoying pop-ups or ads.
 
-   ```bash
-   npm run dev
-   ```
+---
 
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
-
-6. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
-
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
-
-## Feedback and issues
-
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
-
-## More Supabase examples
-
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+Thanks for checking out Hijra! We hope it becomes a valuable part of your spiritual journey. 🌟

@@ -15,7 +15,7 @@ export default async function ProtectedPage() {
   }
 
   const { data: prayerTracking, error } = await supabase
-    .from('prayer_tracking')
+    .from('prayer_tracker')
     .select()
     .eq('user_id', user.id); // Filter by user_id
 
