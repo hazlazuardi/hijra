@@ -14,6 +14,18 @@ export default async function ProtectedPage() {
     return redirect("/sign-in");
   }
 
+  const { data: prayerTracking, error } = await supabase
+    .from('prayer_tracking')
+    .select()
+    .eq('user_id', user.id); // Filter by user_id
+
+  if (error) {
+    console.error('Error fetching prayer tracking:', error);
+  } else {
+    console.log('User ID:', user.id);
+    console.log('Prayer tracking data:', prayerTracking);
+  }
+
   return (
     <div className="flex-1 w-full flex flex-col gap-12">
       <div className="w-full">
@@ -27,6 +39,9 @@ export default async function ProtectedPage() {
         <h2 className="font-bold text-2xl mb-4">Your user details</h2>
         <pre className="text-xs font-mono p-3 rounded border max-h-32 overflow-auto">
           {JSON.stringify(user, null, 2)}
+        </pre>
+        <pre className="text-xs font-mono p-3 rounded border max-h-32 overflow-auto">
+          {JSON.stringify(prayerTracking, null, 2)}
         </pre>
       </div>
       <div>
