@@ -1,83 +1,53 @@
-import DeployButton from "@/components/deploy-button";
-import { EnvVarWarning } from "@/components/env-var-warning";
-import { ClientHeaderAuth } from "@/components/client-header-auth";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { Navbar } from "@/components/ui/navbar";
-import { AuthProvider } from "@/components/auth-provider";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
-import { Geist } from "next/font/google";
-import { ThemeProvider } from "next-themes";
-import Link from "next/link";
+import { Inter } from "next/font/google";
 import "./globals.css";
+import { Navbar } from "@/components/Navbar";
+import { Providers } from "../components/Providers";
 
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "Hijra - Your Islamic Companion",
+  description: "Track your prayers, read Quran, and build consistent spiritual habits.",
+  manifest: "/manifest.json",
+  themeColor: "#4f46e5",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Hijra",
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+  },
 };
-
-const geistSans = Geist({
-  display: "swap",
-  subsets: ["latin"],
-});
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className={geistSans.className} suppressHydrationWarning>
-      {/* <script src="https://unpkg.com/react-scan/dist/auto.global.js" /> */}
-      <body className="bg-background text-foreground">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <AuthProvider>
-            <main className="min-h-screen flex flex-col items-center">
-              <div className="flex-1 w-full flex flex-col gap-20 items-center">
-                <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-                  <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
-                    <div className="flex gap-5 items-center font-semibold">
-                      <Link href={"/"}>Next.js Supabase Starter</Link>
-                      <div className="flex items-center gap-2">
-                        <DeployButton />
-                      </div>
-                    </div>
-                    {!hasEnvVars ? <EnvVarWarning /> : <ClientHeaderAuth />}
-                  </div>
-                </nav>
-                <div className="flex flex-col gap-20 max-w-5xl p-5">
-                  {children}
-                </div>
-
-                <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-                  <p>
-                    Powered by{" "}
-                    <a
-                      href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-                      target="_blank"
-                      className="font-bold hover:underline"
-                      rel="noreferrer"
-                    >
-                      Supabase
-                    </a>
-                  </p>
-                  <ThemeSwitcher />
-                </footer>
-              </div>
-            </main>
-            
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* <script
+          crossOrigin="anonymous"
+          src="//unpkg.com/react-scan/dist/auto.global.js"
+        /> */}
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="theme-color" content="#4f46e5" />
+      </head>
+      <body className={inter.className}>
+        <Providers>
+          <div className="min-h-screen flex flex-col">
             <Navbar />
-          </AuthProvider>
-        </ThemeProvider>
+            <main className="flex-1 pt-16 md:pt-16">
+              {children}
+            </main>
+          </div>
+        </Providers>
       </body>
     </html>
   );

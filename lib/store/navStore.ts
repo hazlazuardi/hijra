@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-type NavSection = 'dashboard' | 'prayer' | 'fasting' | 'quran' | 'kultum'
+type NavSection = 'dashboard' | 'prayer' | 'fasting' | 'quran' | 'kultum' | 'profile'
 
 interface NavState {
   activeSection: NavSection
