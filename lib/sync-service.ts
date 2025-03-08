@@ -322,43 +322,76 @@ export const fetchPrayers = async (userId: string, date: string) => {
 };
 
 // Get recent prayer data for the last n days
-export const getRecentPrayers = async (userId: string, days: number = 7) => {
+export const getRecentPrayers = async (
+  userId: string, 
+  daysToInclude: number = 14,
+  formatDateFn?: (date: Date) => string
+) => {
   try {
     if (!userId) {
       console.error("Missing userId for getRecentPrayers");
       return [];
     }
     
-    const dates: string[] = [];
     const today = new Date();
+    const result: Array<{
+      date: string;
+      prayers: Array<{ name: string; status: PrayerStatus; time?: string }>;
+    }> = [];
     
-    // Generate array of dates for the last n days
-    for (let i = 0; i < days; i++) {
+    // Default date formatting function if none provided
+    const formatDateStrLocal = formatDateFn || ((date: Date) => {
+      return date.toISOString().split('T')[0];
+    });
+    
+    // Get data from IndexedDB for each day individually
+    const storedPrayersByDate: Record<string, any> = {};
+    
+    // Generate dates in local timezone and pre-populate with data
+    for (let i = daysToInclude - 1; i >= 0; i--) {
       const date = new Date(today);
       date.setDate(today.getDate() - i);
-      dates.push(date.toISOString().split('T')[0]);
+      const dateStr = formatDateStrLocal(date);
+      
+      // Get data for this specific date
+      const prayersForDate = await idb.getPrayersByDate(dateStr, userId);
+      
+      if (prayersForDate.length > 0) {
+        // We have this date in local storage
+        storedPrayersByDate[dateStr] = prayersForDate[0];
+        result.push({
+          date: dateStr,
+          prayers: prayersForDate[0].prayers
+        });
+      } else {
+        // Try to get from server if online
+        if (useAuthStore.getState().isOnline) {
+          try {
+            const prayers = await fetchPrayers(userId, dateStr);
+            result.push({
+              date: dateStr,
+              prayers
+            });
+          } catch (error) {
+            console.error(`Error fetching prayers for ${dateStr}:`, error);
+            result.push({
+              date: dateStr,
+              prayers: [...DEFAULT_PRAYERS]
+            });
+          }
+        } else {
+          // Offline, use default values
+          result.push({
+            date: dateStr,
+            prayers: [...DEFAULT_PRAYERS]
+          });
+        }
+      }
     }
     
-    // Fetch prayers for each date
-    const prayersPromises = dates.map(date => idb.getPrayersByDate(date, userId));
-    const prayersResults = await Promise.all(prayersPromises);
-    
-    // Transform results into a more usable format
-    return dates.map((date, index) => {
-      const prayerData = prayersResults[index];
-      if (prayerData.length > 0) {
-        return {
-          date,
-          prayers: prayerData[0].prayers
-        };
-      }
-      return {
-        date,
-        prayers: [...DEFAULT_PRAYERS]
-      };
-    });
+    return result;
   } catch (error) {
-    console.error("Error fetching recent prayers:", error);
+    console.error("Error in getRecentPrayers:", error);
     return [];
   }
 };

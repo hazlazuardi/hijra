@@ -8,20 +8,30 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Moon, BookOpen, Sunrise, CheckCircle, Star, Users, Clock, Shield, Smartphone } from "lucide-react";
 import Image from "next/image";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function HomePage() {
-  const { user, isLoggedIn, checkUser } = useAuthStore();
+  const { user, isLoggedIn, checkUser, isLoading } = useAuthStore();
   const { setActiveSection } = useNavStore();
   const [mounted, setMounted] = useState(false);
 
   // Check authentication
   useEffect(() => {
     const checkAuth = async () => {
-      await checkUser();
-      setMounted(true);
+      try {
+        await checkUser();
+      } catch (error) {
+        console.error("Error checking user:", error);
+      } finally {
+        setMounted(true);
+      }
     };
     
     checkAuth();
+    
+    return () => {
+      // Cleanup
+    };
   }, [checkUser]);
 
   // Update active section for navbar
@@ -35,15 +45,18 @@ export default function HomePage() {
   if (!mounted) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
-        <p className="mt-4 text-muted-foreground">Loading...</p>
+        <Skeleton className="h-8 w-8 rounded-full" />
+        <Skeleton className="h-4 w-32 mt-4" />
       </div>
     );
   }
 
   // For authenticated users, redirect to dashboard
   if (isLoggedIn) {
-    window.location.href = '/dashboard';
+    // Use client-side navigation if available
+    if (typeof window !== 'undefined') {
+      window.location.href = '/dashboard';
+    }
     return null;
   }
 

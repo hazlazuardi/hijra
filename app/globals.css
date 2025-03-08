@@ -82,14 +82,14 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-/* Custom class to hide scrollbar on specific elements */
+/* Hide scrollbar but allow scrolling */
 .hide-scrollbar {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .hide-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari and Opera */
+  display: none;  /* Chrome, Safari and Opera */
 }
 
 /* Date controls */
